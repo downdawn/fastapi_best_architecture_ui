@@ -11,6 +11,7 @@ import localeServerMonitor from '@/views/monitor/server/locale/zh-CN';
 import localeRedisMonitor from '@/views/monitor/redis/locale/zh-CN';
 import localeSysUser from '@/views/admin/user/locale/zh-CN';
 import localeSysRole from '@/views/admin/role/locale/zh-CN';
+import localeSerpTask from '@/views/serp/task/locale/zh-CN';
 import localeSettings from './zh-CN/settings';
 
 export default {
@@ -20,6 +21,7 @@ export default {
   'menu.system': '系统管理',
   'menu.log': '日志',
   'menu.monitor': '系统监控',
+  'menu.serp': '搜索引擎',
   'menu.server.monitor': '实时监控-服务端',
   'menu.list': '列表页',
   'menu.result': '结果页',
@@ -53,4 +55,5 @@ export default {
   ...localeRedisMonitor,
   ...localeSysUser,
   ...localeSysRole,
+  ...localeSerpTask,
 };
