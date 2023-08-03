@@ -139,7 +139,6 @@
               >
                 <a-tree-select
                   v-model="form.parent_id"
-                  v-model:model-value="form.parent_id"
                   :allow-clear="true"
                   :allow-search="true"
                   :data="treeSelectData"
@@ -195,7 +194,6 @@
               >
                 <a-switch
                   v-model="form.status"
-                  v-model:model-value="switchStatus"
                   :checked-text="$t('switch.open')"
                   :unchecked-text="$t('switch.close')"
                 />

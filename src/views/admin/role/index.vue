@@ -161,7 +161,6 @@
               >
                 <a-switch
                   v-model="form.status"
-                  v-model:model-value="switchStatus"
                   :checked-text="$t('switch.open')"
                   :unchecked-text="$t('switch.close')"
                 ></a-switch>

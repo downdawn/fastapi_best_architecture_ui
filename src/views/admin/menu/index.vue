@@ -141,10 +141,7 @@
     >
       <a-form ref="formRef" :model="form">
         <a-form-item :label="$t('admin.menu.columns.type')" field="menu_type">
-          <a-radio-group
-            v-model="form.menu_type"
-            v-model:model-value="menuType"
-          >
+          <a-radio-group v-model="form.menu_type">
             <a-radio :value="0">
               {{ $t('admin.menu.columns.type.0') }}
             </a-radio>
@@ -162,7 +159,6 @@
         >
           <a-tree-select
             v-model="form.parent_id"
-            v-model:model-value="form.parent_id"
             :allow-clear="true"
             :allow-search="true"
             :data="treeSelectData"
@@ -253,7 +249,6 @@
         >
           <a-switch
             v-model="form.cache"
-            v-model:model-value="switchCache"
             :checked-text="$t('switch.open')"
             :unchecked-text="$t('switch.close')"
           />
@@ -266,7 +261,6 @@
         >
           <a-switch
             v-model="form.show"
-            v-model:model-value="switchShow"
             :checked-text="$t('switch.open')"
             :unchecked-text="$t('switch.close')"
           />
@@ -279,7 +273,6 @@
         >
           <a-switch
             v-model="form.status"
-            v-model:model-value="switchStatus"
             :checked-text="$t('switch.open')"
             :unchecked-text="$t('switch.close')"
           />
@@ -291,7 +284,6 @@
         >
           <a-input-number
             v-model="form.sort"
-            v-model:model-value="form.sort"
             :default-value="0"
             :mode="'button'"
             :placeholder="$t('admin.menu.columns.sort')"

@@ -207,10 +207,10 @@
                 ]"
                 field="num"
               >
-                <a-input
+                <a-input-number
                   v-model="form.num"
                   :placeholder="$t('serp.task.form.num.placeholder')"
-                ></a-input>
+                ></a-input-number>
               </a-form-item>
               <a-form-item
                 :feedback="true"
