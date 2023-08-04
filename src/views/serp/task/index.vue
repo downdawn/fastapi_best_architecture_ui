@@ -320,7 +320,7 @@
               <a-list-item>
                 <a-list-item-meta
                   :title="`${$t('serp.task.columns.area')}: ${
-                    renderQueryData.area
+                    renderQueryData.area ? renderQueryData.area : '-'
                   }`"
                 />
               </a-list-item>
@@ -334,10 +334,11 @@
             </a-list>
             <a-list
               :data="renderQueryData.urls"
-              :pagination-props="paginationProps"
+              :max-height="300"
+              :bordered="false"
             >
               <template #item="{ item, index }">
-                <a-list-item>
+                <a-list-item action-layout="vertical">
                   <a-list-item-meta
                     :title="`${$t('serp.task.columns.index')}: ${index + 1}`"
                   />
@@ -348,8 +349,24 @@
               </template>
             </a-list>
             <a-divider />
-            <!--            <div v-html="renderQueryData.html"></div>-->
+            <a-button
+              type="primary"
+              :loading="queryLoading"
+              @click="QueryHTML()"
+              >{{ $t(`serp.task.columns.query_html.drawer`) }}</a-button
+            >
           </a-drawer>
+          <a-modal
+            :visible="openQueryHTML"
+            fullscreen
+            @ok="okQueryHTML"
+            @cancel="cancelQueryHTML"
+          >
+            <template #title>
+              {{ $t(`serp.task.columns.html_detail.drawer`) }}
+            </template>
+            <div v-html="currentRenderHTML"></div>
+          </a-modal>
         </div>
       </a-card>
     </a-layout>
@@ -370,6 +387,7 @@
     createSerpTask,
     deleteSerpTask,
     querySerpDataRecent,
+    querySerpHtmlRecent,
     querySerpTaskDetail,
     querySerpTaskList,
     SerpDataReq,
@@ -439,6 +457,10 @@
     drawerTitle.value = t('serp.task.columns.query.drawer');
     await fetchSerpDataDetail(taskId);
     openSearchRecent.value = true;
+    currentTaskId.value = taskId;
+  };
+  const QueryHTML = async () => {
+    await fetchSerpHTML(currentTaskId.value);
   };
   const columns = computed<TableColumnData[]>(() => [
     {
@@ -491,7 +513,11 @@
   const openNewOrEdit = ref<boolean>(false);
   const openDelete = ref<boolean>(false);
   const openSearchRecent = ref<boolean>(false);
+  const openQueryHTML = ref<boolean>(false);
   const drawerTitle = ref<string>('');
+  const currentTaskId = ref<number>(0);
+  const currentRenderHTML = ref<string>('');
+  const queryLoading = ref<boolean>(false);
   const stateOptions = computed(() => [
     {
       label: t('serp.task.form.state.-1'),
@@ -515,16 +541,19 @@
     area: undefined,
     urls: [],
     create_time: undefined,
-    html: undefined,
-  });
-  const paginationProps = reactive({
-    defaultPageSize: 10,
-    total: 0,
   });
   const cancelReq = () => {
     openNewOrEdit.value = false;
     openDelete.value = false;
     openSearchRecent.value = false;
+  };
+  const cancelQueryHTML = () => {
+    openQueryHTML.value = false;
+    currentTaskId.value = 0;
+    currentRenderHTML.value = '';
+  };
+  const okQueryHTML = () => {
+    openQueryHTML.value = false;
   };
   const formDefaultValues: SerpTaskReq = {
     keyword: '',
@@ -626,13 +655,25 @@
   const fetchSerpDataDetail = async (taskId: number) => {
     setLoading(true);
     try {
-      const res = await querySerpDataRecent(taskId);
-      renderQueryData.value = res;
-      paginationProps.total = res.urls?.length ?? 0;
+      renderQueryData.value = await querySerpDataRecent(taskId);
     } catch (error) {
       // console.log(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // 请求HTML
+  const fetchSerpHTML = async (taskId: number) => {
+    queryLoading.value = true;
+    try {
+      const res = await querySerpHtmlRecent(taskId);
+      currentRenderHTML.value = res.html;
+    } catch (error) {
+      // console.log(error);
+    } finally {
+      queryLoading.value = false;
+      openQueryHTML.value = true;
     }
   };
 

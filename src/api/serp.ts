@@ -66,7 +66,6 @@ export interface SerpDataReq {
   area?: string;
   urls?: string[];
   create_time?: string;
-  html?: string;
 }
 
 export interface SerpDataRes extends SerpDataReq {
@@ -75,4 +74,16 @@ export interface SerpDataRes extends SerpDataReq {
 
 export function querySerpDataRecent(taskId: number): Promise<SerpDataRes> {
   return axios.get(`/api/v1/serp/data/recent/${taskId}`);
+}
+
+export interface SerpHtmlReq {
+  html: string;
+}
+
+export interface SerpHtmlRes extends SerpHtmlReq {
+  task_id: number;
+}
+
+export function querySerpHtmlRecent(taskId: number): Promise<SerpHtmlRes> {
+  return axios.get(`/api/v1/serp/data/html/${taskId}`);
 }

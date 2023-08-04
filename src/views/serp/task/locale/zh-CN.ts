@@ -27,6 +27,8 @@ export default {
   'serp.task.columns.edit.drawer': '编辑任务',
   'serp.task.columns.delete.drawer': '删除任务',
   'serp.task.columns.query.drawer': '查询任务',
+  'serp.task.columns.query_html.drawer': '查询HTML',
+  'serp.task.columns.html_detail.drawer': 'HTML详情',
   // columns
   'serp.task.columns.edit': '编辑',
   'serp.task.columns.query': '查询',
@@ -36,7 +38,7 @@ export default {
   'serp.task.columns.expire_time': '过期时间',
   'serp.task.columns.update_time': '更新时间',
   'serp.task.columns.urls': 'URLs',
-  'serp.task.columns.index': '索引',
+  'serp.task.columns.index': 'url排名',
   'serp.task.columns.create_time': '创建时间',
   'serp.task.columns.html': 'HTML',
   'serp.task.columns.state': '状态',
